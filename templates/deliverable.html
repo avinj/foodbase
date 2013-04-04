@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+  <title>Aavya Health - NutriCart Reults&trade;</title>
+  <meta name="description" content="An adaptive shopping cart that presents foods and recipes based on your nutritional needs and tastes.">
+  <meta name="author" content="Aavya Health">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}"/>
+  </head>
+  <body>
+  <div id="container">
+      <div id="title">
+        Shopping NutriCart&trade; by 
+        <img src="{{ url_for('static', filename='img/aavya_logo.png') }}">
+        Aavya Health
+      </div>
+      <div class="explain">Thank you for using NutriCart™! We've compiled your cart, detailed related recipes, and coupons below. If you'd like to create a new NutriCart™, tap "Create a New Cart" at the bottom of the page.</div>
+      <div class="buttons">
+        <a class="button orange" type="button" href="/">CREATE A NEW CART</a>
+      </div>
+      <div class="deliversection">YOUR HEALTHY CART</div>
+      <div class="delivercart">
+      {% for food in cart %}
+        <div class="fooditem deliverablefood" id="{{ food['id'] }}">
+          <div class="image">
+            <img src="{{ url_for('static', filename='img/foods/'+food['img']) }}">
+          </div>
+          <div class="title">
+            <div>{{ food['name'] }}</div>
+          </div>
+        </div>  
+      {% endfor %}
+    </div>
+      <div class="deliversection">RECIPES USING FOODS FROM YOUR CART</div>
+      <div id="allrecipes">
+      {% for recipe in recipes %}
+      <div class="fullrecipe">
+        <div class="title">
+              <div>
+                {{ recipe['name'] }}
+              </div>
+              <div class="subtitle"><strong>SOURCE</strong>: {{ recipe['source'] }}</div>
+        </div>
+        <div class="fullrecipeimg">
+          <img src="static/img/recipes/{{ recipe['id'] }}.jpg"/>
+        </div>
+        <div class="recipedesc">
+          <p><span class="textsection">INGREDIENTS FROM YOUR CART</span> 
+            <ul>
+            {%for food in cart%}
+                {% if food['id'] in recipe['foodsused']%}<li>{{food['name']|title}}</li>{%endif%}
+            {%endfor%}
+            </ul>
+          </p>
+          <p><span class="textsection">YIELDS:</span> {{ recipe['servings'] }} servings</p>
+          <p><span class="textsection">ALL INGREDIENTS</span><br/>
+            <ul>
+              {% for ingredient in recipe['ingredients']%}
+                  {% if not ingredient['qty'] %}
+                      {% if notfirst %}
+                        </ul><li>{{ingredient['name']|replace('=','')}}<ul>
+                      {% else %}
+                        <li>{{ingredient['name']|replace('=','')}}<ul>
+                          {% set notfirst = True %}
+                      {% endif %}
+                  {% else %}
+                      <li>{{ingredient['qty']}} {{ingredient['unit']}} {{ingredient['name']}} {% if ingredient['prep']%}({{ ingredient['prep'] }}){% endif %}</li>
+                  {% endif %}
+                  {%if notfirst and loop.last%}</ul></li>{% endif %}
+              {% endfor %}
+            </ul>
+          </p>
+          <p><span class="textsection">INSTRUCTIONS</span><br/>{{ recipe['directions'] }}</p>
+          <p><span class="textsection">SERVING NUTRITION</span><ul>
+            {% for nutrient in recipe['nutrition']%}
+              <li><strong>{{nutrient|replace(';','')}}</strong>: {{recipe['nutrition'][nutrient]}}{% if recipe['nutrition'][nutrient] != 'trace' %}{% if nutrient in ['Sodium','Cholesterol'] %} mg{% elif nutrient in ['Dietary Fiber','Fat','Total Fat','Carbohydrate','Protein'] %} g{% elif nutrient == 'Percent Calories From Fat'%}%{% endif %}{% endif %}
+              </li>
+            {% endfor %}
+          </ul></p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+      <div class="deliversection">YOUR COUPONS</div>
+      <div class="delivercoupons">
+      <div class="coupon">
+        <img src="static/img/coupons/coupon1.png">
+      </div>
+      <div class="coupon">
+        <img src="static/img/coupons/coupon2.png">
+      </div>
+      <div class="coupon">
+        <img src="static/img/coupons/coupon3.png">
+      </div>
+      <div class="coupon">
+        <img src="static/img/coupons/coupon5.png">
+      </div>
+      <div class="coupon">
+        <img src="static/img/coupons/coupon6.png">
+      </div>
+      <div class="coupon">
+        <img src="static/img/coupons/coupon7.png">
+      </div>
+    </div>
+      <div class="buttons">
+        <a class="button orange" type="button" href="/">CREATE A NEW CART</a>
+      </div>
+      </div>
+      <script>$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};</script>
+      <script src="{{ url_for('static', filename='js/masonry.min.js') }}"></script>
+  </body>
+</html>

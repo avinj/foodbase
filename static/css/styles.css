@@ -1,0 +1,115 @@
+/*@import"http://fonts.googleapis.com/css?family=Montserrat";*/
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Montserrat-Regular'), url('zhcz-_WihjSQC0oHJ9TCYL3hpw3pgy2gAi-Ip7WPMi0.woff') format('woff');
+}
+#container{margin-left:auto;margin-right:auto;width:1380px}
+#recipebar,#recipetitle{width:410px}
+#recipetitle{background:-moz-linear-gradient(top,rgba(0,0,0,0.75) 0%,rgba(0,0,0,0) 100%);background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,rgba(0,0,0,0.75)),color-stop(100%,rgba(0,0,0,0)));background:-webkit-linear-gradient(top,rgba(0,0,0,0.75) 0%,rgba(0,0,0,0) 100%);background:-o-linear-gradient(top,rgba(0,0,0,0.75) 0%,rgba(0,0,0,0) 100%);background:linear-gradient(to bottom,rgba(0,0,0,0.75) 0%,rgba(0,0,0,0) 100%);color:#fff;font-size:18px;padding:5px 0;position:absolute;text-shadow:-1px 3px 3px #000;top:10px;z-index:2}
+#recipetitle span{width:180px}
+#saverecipe{z-index:2}
+#saverecipe .button{font-size:18px;position:absolute;top:180px}
+#title{background:rgba(255,255,255,.5);border-radius:10px;font:36px "Montserrat",sans-serif;margin-left:auto;margin-right:auto;padding:5px 0;text-align:center;text-shadow:0 1px 1px rgba(0,0,0,.3);width:1350px}
+#title img{vertical-align:top;width:90px}
+.button{border-radius:.5em;box-shadow:0 1px 2px rgba(0,0,0,.2);cursor:pointer;display:inline-block;font:30px "Montserrat",sans-serif;margin:0 2px;outline:none;padding:.5em 2em .55em;text-align:center;text-decoration:none;text-shadow:0 1px 1px rgba(0,0,0,.3);vertical-align:baseline;zoom:1;-moz-border-radius:.5em;-moz-box-shadow:0 1px 2px rgba(0,0,0,.2);-webkit-border-radius:.5em;-webkit-box-shadow:0 1px 2px rgba(0,0,0,.2)}
+.button:active{position:relative;top:1px}
+.buttons{margin-top:20px;text-align:center;width:100%}
+.caroufredsel_wrapper{border-radius:3px;box-shadow:3px 3px 3px #717171}
+.fooditem,.recipeitem{background:#fff;border-radius:4px;box-shadow:2px 2px 10px #717171;height:235px;margin:10px 15px;padding:10px;position:relative;width:180px}
+.image img{border-radius:3px;box-shadow:3px 3px 3px #717171;width:180px}
+.image,.title,.fooditem,.recipeitem,.buttons,#saverecipe{float:left;position:relative}
+.orange{background:#f78d1d;background:-webkit-gradient(linear,left top,left bottom,from(#faa51a),to(#f47a20));background:-moz-linear-gradient(top,#faa51a,#f47a20);border:solid 1px #da7c0c;color:#fef4e9}
+.orange:active{background:-webkit-gradient(linear,left top,left bottom,from(#f47a20),to(#faa51a));background:-moz-linear-gradient(top,#f47a20,#faa51a);color:#fcd3a5}
+.recipeleft{left:46px;padding:10px 20px;-webkit-transform:matrix(-1,0,0,1,0,0)}
+.recipemiddle{left:110px}
+.reciperight{left:312px;padding:10px 20px}
+.thumbsdown{float:left;position:relative;right:18px;top:125px;width:0;z-index:3}
+.thumbsup{float:left;left:140px;position:relative;top:125px;width:0;z-index:2}
+.thumbsup img,.thumbsdown img{width:60px}
+.subtitle{font-size:14px;}
+.deliversection{
+    display:inline-block;
+    font-family: Montserrat, sans-serif;
+font-weight: bold;
+font-size: 28px;
+margin-left: 15px;
+margin-top: 20px;
+text-shadow: 2px 2px 5px #fff;
+}
+.deliversection :not(:first-child) {
+    float:left;
+}
+.deliverablefood {
+    height: 150px;
+    width: 110px;
+    padding: 16px;
+}
+.deliverablefood img{
+    width: 110px;
+}
+.deliverablefood .title{
+    width: 110px;
+    height: 25px;
+    font-size: 13px;
+}
+.coupon {
+    float: left;
+    margin: 20px;
+    background: white;
+    width: 630px;
+    border-radius: 4px;
+    padding: 10px;
+    box-shadow: 2px 2px 10px #717171;
+}
+.fullrecipe {
+background: white;
+padding: 20px;
+margin: 20px;
+width: 610px;
+border-radius: 4px;
+box-shadow: 2px 2px 10px #717171
+}
+
+.textsection {
+    font-size: 18px;
+font-weight: 800;
+text-shadow: 1px 1px 2px gray;
+}
+.fullrecipe .title{
+    width: 610px;
+    height: auto;
+    position: absolute;
+    font-size: 28px;
+    color: white;
+    text-shadow: -1px 3px 3px #000;
+    background: linear-gradient(to bottom,rgba(0,0,0,0.75) 0%,rgba(0,0,0,0) 100%)
+}
+
+.recipedesc{
+    font-family: Montserrat, sans-serif;
+margin: 20px 0;
+}
+
+.fullrecipeimg img {
+    width: 610px;
+    height:407px;
+    border-radius:10px;
+    background: linear-gradient(to top,rgba(0,0,0,0.75) 0%,rgba(0,0,0,0) 100%)
+}
+
+.coupon img{
+    width: 630px;
+    height: 300px;
+}
+
+.explain.goal {
+    text-align: center;
+width: 300px;
+}
+
+.title{font:19px "Montserrat",sans-serif;padding:6px 0;text-align:center;text-shadow:1px 1px 4px #b19896;width:180px;overflow:hidden;height:40px}
+.explain{font-family: Montserrat, sans-serif; text-shadow:1px 1px 3px #fff;text-align:justify;font-size: 16px;width: 1330px;margin-left: auto;margin-right: auto;padding: 10px;background: rgba(255,255,255,0.25);margin-top: 10px;border-radius: 10px;}
+html{min-height: 100%}
+body{background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#cdeb8e),color-stop(100%,#a5c956));background:-webkit-linear-gradient(top,#cdeb8e 0%,#a5c956 100%);background:linear-gradient(to bottom,#cdeb8e 0%,#a5c956 100%)}

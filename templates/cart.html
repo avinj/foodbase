@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  	<meta charset="utf-8">
+	<title>Aavya Health - Shopping NutriCart&trade;</title>
+	<meta name="description" content="An adaptive shopping cart that presents foods and recipes based on your nutritional needs and tastes.">
+	<meta name="author" content="Aavya Health">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+	<link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}"/>
+  </head>
+  <body>
+	<div id="container">
+      <div id="title">
+        NutriCart&trade; by 
+        <img src="{{ url_for('static', filename='img/aavya_logo.png') }}">
+        Aavya Health
+      </div>
+      <div class="explain goal" style="background: none;
+position: absolute;
+top: -1px;
+left: 1250px;
+">Selected Goal:<br/><soan style="font-weight:bold">Lower Blood Pressure</span></div>
+      <div class="explain">Here's a shopping cart personalized for your nutritional needs. Check out and save recipies for inspiration. Tap the foods you're not interested to get select new foods and recipes. Tap "Print My Foods and Recipes" when you're done!</div>
+      {% for food in cart %}
+        <div class="fooditem" id="{{ food['id'] }}">
+          <div class="thumbsup">
+            <img src="{{ url_for('static', filename='img/thumbs_up.png') }}">
+          </div>
+          <div class="thumbsdown">
+            <img src="{{ url_for('static', filename='img/thumbs_down.png') }}">
+          </div>
+          <div class="image">
+            <img src="{{ url_for('static', filename='img/foods/'+food['img']) }}">
+          </div>
+          <div class="title">
+            <div>{{ food['name'] }}</div>
+          </div>
+        </div>
+        {% if loop.index == (loop.length/2) %}
+          <div id="recipebar" class="recipeitem">
+            <div id="recipetitle" class="title">
+              <div>
+                {{ recipes[0]['name'] }}
+              </div>
+              <div class="subtitle">
+                INCLUDES {{recipes[0]['foodsused']}} 
+                {% if recipes[0]['foodsused'] > 1 %}
+                  ITEMS
+                {% elif recipes[0]['foodsused'] == 1%}
+                  ITEM
+                {% endif %}
+                 FROM YOUR CART
+              </div>
+            </div>
+            <div id="saverecipe">
+              <input id="recipeleft" class="recipeleft button orange" type="button" value="&#9654;">
+              <input class="recipemiddle button save orange" type="button" value="SAVE RECIPE">
+              <input id="reciperight" class="reciperight button orange" type="button" value="&#9654;">
+            </div>
+            <div class="carousel">
+                {% for recipe in recipes%}
+                  <div title="{{recipe['name']}}" name="{{recipe['foodsused']}}" id="{{recipe['id']}}"><img src="{{ url_for('static', filename='img/recipes/'+recipe['img']) }}" width=410 height=230 border="0" /></div>
+                {% endfor %}
+            </div>
+          </div>
+        {% endif %}    
+      {% endfor %}
+      <div class="buttons">
+        <a class="button orange" type="button" href="results">PRINT MY FOODS AND RECIPES</a>
+      </div>
+      </div>
+      <audio id="tapsound">
+        <source src="{{ url_for('static', filename='audio/tap.wav') }}" type="audio/wav">
+      </audio>
+      <script>$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};</script>
+      <script src="{{ url_for('static', filename='js/libraries.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+  </body>
+</html>
