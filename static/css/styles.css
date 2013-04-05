@@ -25,9 +25,6 @@
 .recipeleft{left:46px;padding:10px 20px;-webkit-transform:matrix(-1,0,0,1,0,0)}
 .recipemiddle{left:110px}
 .reciperight{left:312px;padding:10px 20px}
-.thumbsdown{float:left;position:relative;right:18px;top:125px;width:0;z-index:3}
-.thumbsup{float:left;left:140px;position:relative;top:125px;width:0;z-index:2}
-.thumbsup img,.thumbsdown img{width:60px}
 .subtitle{font-size:14px;}
 .deliversection{
     display:inline-block;

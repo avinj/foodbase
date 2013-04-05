@@ -23,12 +23,6 @@ left: 1250px;
       <div class="explain">Here's a shopping cart personalized for your nutritional needs. Check out and save recipies for inspiration. Tap the foods you're not interested to get select new foods and recipes. Tap "Print My Foods and Recipes" when you're done!</div>
       {% for food in cart %}
         <div class="fooditem" id="{{ food['id'] }}">
-          <div class="thumbsup">
-            <img src="{{ url_for('static', filename='img/thumbs_up.png') }}">
-          </div>
-          <div class="thumbsdown">
-            <img src="{{ url_for('static', filename='img/thumbs_down.png') }}">
-          </div>
           <div class="image">
             <img src="{{ url_for('static', filename='img/foods/'+food['img']) }}">
           </div>

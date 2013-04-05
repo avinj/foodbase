@@ -107,20 +107,9 @@ function genShow() {
 genShow();
 
 //play sound
-$('input, .thumbsup, .thumbsdown, .fooditem, a').click(function() {
+$('input, .fooditem, a').click(function() {
 	$("#tapsound")[0].load();
 	$("#tapsound")[0].play();
-});
-
-//simulated thumbs up/thumbs down
-$('.thumbsup, .thumbsdown').click(function(evt){
-	currentFoodItem = $(evt.target).parent().parent();
-	if ($(evt.target).parent().hasClass('thumbsup')){
-		currentFoodItem.find('.thumbsdown').fadeToggle(200);
-		currentFoodItem.find('.thumbsup').animate({left: '-18px'},200,'linear')
-	} else {
-		currentFoodItem.find('.thumbsup').fadeToggle();
-	}
 });
 
 // Update cart and recipes
@@ -134,10 +123,6 @@ $(function() {
 
 	//Handle cart and recipe replacements
     $('.fooditem').on('click', function(e) {
-    	if($(e.target).hasClass("thumbsup")) return;
-    	if($(e.target).parent().hasClass("thumbsup")) return;
-    	if($(e.target).hasClass("thumbsdown")) return;
-    	if($(e.target).parent().hasClass("thumbsdown")) return;
     	prevID = $(this).attr('id');
       	$.getJSON($SCRIPT_ROOT + '/_update_cart', {
       		itemToReplace: prevID
@@ -147,9 +132,6 @@ $(function() {
       			//food item
       			$(oldID + ' .title div').text(data.name);
       			$(oldID + ' .image img').attr('src','static/img/foods/'+data.img);
-      			$(oldID + ' .thumbsup').css('left','140px');
-      			$(oldID + ' .thumbsup').css('display', 'inline');
-      			$(oldID + ' .thumbsdown').css('display', 'inline');
       			$(oldID).fadeIn('fast');
       			$(oldID).attr('id',data.id);
 
