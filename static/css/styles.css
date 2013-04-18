@@ -35,6 +35,9 @@ margin-left: 15px;
 margin-top: 20px;
 text-shadow: 2px 2px 5px #fff;
 }
+.recipesubtitle{
+font-size: 24px;
+}
 .deliversection :not(:first-child) {
     float:left;
 }
@@ -51,6 +54,7 @@ text-shadow: 2px 2px 5px #fff;
     height: 25px;
     font-size: 13px;
 }
+
 .coupon {
     float: left;
     margin: 20px;
@@ -60,6 +64,9 @@ text-shadow: 2px 2px 5px #fff;
     padding: 10px;
     box-shadow: 2px 2px 10px #717171;
 }
+.recipetoggle{
+    display:none;
+}
 .fullrecipe {
 background: white;
 padding: 20px;
@@ -67,6 +74,10 @@ margin: 20px;
 width: 610px;
 border-radius: 4px;
 box-shadow: 2px 2px 10px #717171
+}
+
+.recipetogglebtn{
+    font-size:21.3px;
 }
 
 .textsection {
@@ -107,6 +118,6 @@ width: 300px;
 }
 
 .title{font:19px "Montserrat",sans-serif;padding:6px 0;text-align:center;text-shadow:1px 1px 4px #b19896;width:180px;overflow:hidden;height:40px}
-.explain{font-family: Montserrat, sans-serif; text-shadow:1px 1px 3px #fff;text-align:justify;font-size: 16px;width: 1330px;margin-left: auto;margin-right: auto;padding: 10px;background: rgba(255,255,255,0.25);margin-top: 10px;border-radius: 10px;}
+.explain{font-family: Montserrat, sans-serif; text-shadow:1px 1px 3px #fff;text-align:justify;font-size: 19px;width: 1330px;margin-left: auto;margin-right: auto;padding: 10px;background: rgba(255,255,255,0.25);margin-top: 10px;border-radius: 10px;}
 html{min-height: 100%}
 body{background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#cdeb8e),color-stop(100%,#a5c956));background:-webkit-linear-gradient(top,#cdeb8e 0%,#a5c956 100%);background:linear-gradient(to bottom,#cdeb8e 0%,#a5c956 100%)}

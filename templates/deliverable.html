@@ -2,22 +2,35 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-  <title>Aavya Health - NutriCart Reults&trade;</title>
+  <title>Aavya Health - NutriCart Results&trade;</title>
   <meta name="description" content="An adaptive shopping cart that presents foods and recipes based on your nutritional needs and tastes.">
   <meta name="author" content="Aavya Health">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
   <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}"/>
+  <style>
+         .axis path,
+        .axis line {
+          fill: none;
+          stroke: #000;
+          shape-rendering: crispEdges;
+        }
+
+        .area {
+          fill: url(#linearGradient);
+          stroke-width: 0px; 
+        }
+  </style>
   </head>
   <body>
   <div id="container">
       <div id="title">
-        Shopping NutriCart&trade; by 
+        NutriCart&trade; by 
         <img src="{{ url_for('static', filename='img/aavya_logo.png') }}">
         Aavya Health
       </div>
-      <div class="explain">Thank you for using NutriCart™! We've compiled your cart, detailed related recipes, and coupons below. If you'd like to create a new NutriCart™, tap "Create a New Cart" at the bottom of the page.</div>
-      <div class="buttons">
-        <a class="button orange" type="button" href="/">CREATE A NEW CART</a>
+      <div class="explain">Thank you for using NutriCart™! We've compiled your cart, coupons and detailed recipes below. NutriCart™ is like a diet GPS: if you stray from our suggestions, simply revisit this app and, if necessary, we'll adapt with new foods and recipes to guide you to your goals!</div>
+      <div class="deliversection">YOUR PROJECTED WEIGHT</div>
+      <div class="explain" id="weightgraph">
       </div>
       <div class="deliversection">YOUR HEALTHY CART</div>
       <div class="delivercart">
@@ -33,55 +46,62 @@
       {% endfor %}
     </div>
       <div class="deliversection">RECIPES USING FOODS FROM YOUR CART</div>
-      <div id="allrecipes">
-      {% for recipe in recipes %}
-      <div class="fullrecipe">
-        <div class="title">
-              <div>
-                {{ recipe['name'] }}
-              </div>
-              <div class="subtitle"><strong>SOURCE</strong>: {{ recipe['source'] }}</div>
+      <div class="explain">Eat 1 serving of any of these recipes 3 times per day and you'll be on your way to your weight and health goals.</div>
+      {% for category, recipeList in recipes.items() if recipeList %}
+        <div class="deliversection recipesubtitle">{{ category }}</div>
+        <div id="category{{ loop.index }}">
+        {% for recipe in recipeList %}
+          <div class="fullrecipe">
+            <div class="title">
+                  <div>
+                    {{ recipe['name'] }}
+                  </div>
+                  <div class="subtitle"><strong>SOURCE</strong>: {{ recipe['source'] }}</div>
+            </div>
+            <div class="fullrecipeimg">
+              <img src="static/img/recipes/{{ recipe['id'] }}.jpg"/>
+            </div>
+            <div class="recipedesc">
+              <p><span class="textsection">INGREDIENTS FROM YOUR CART</span> 
+                <ul>
+                {%for food in cart%}
+                    {% if food['id'] in recipe['foodsused']%}<li>{{food['name']|title}}</li>{%endif%}
+                {%endfor%}
+                </ul>
+              </p>
+              <p><span class="textsection">SERVING NUTRITION</span><ul>
+                {% for nutrient in recipe['nutrition']%}
+                  <li><strong>{{nutrient|replace(';','')}}</strong>: {{recipe['nutrition'][nutrient]}}{% if recipe['nutrition'][nutrient] != 'trace' %}{% if nutrient in ['Sodium','Cholesterol'] %} mg{% elif nutrient in ['Dietary Fiber','Fat','Total Fat','Carbohydrate','Protein'] %} g{% elif nutrient == 'Percent Calories From Fat'%}%{% endif %}{% endif %}
+                  </li>
+                {% endfor %}
+              </ul></p>
+                <div class="recipetoggle">
+                  <p><span class="textsection">YIELDS:</span> {{ recipe['servings'] }} servings</p>
+                  <p><span class="textsection">ALL INGREDIENTS</span><br/>
+                    <ul>
+                      {% for ingredient in recipe['ingredients']%}
+                          {% if not ingredient['qty'] %}
+                              {% if notfirst %}
+                                </ul><li>{{ingredient['name']|replace('=','')}}<ul>
+                              {% else %}
+                                <li>{{ingredient['name']|replace('=','')}}<ul>
+                                  {% set notfirst = True %}
+                              {% endif %}
+                          {% else %}
+                              <li>{{ingredient['qty']}} {{ingredient['unit']}} {{ingredient['name']}} {% if ingredient['prep']%}({{ ingredient['prep'] }}){% endif %}</li>
+                          {% endif %}
+                          {%if notfirst and loop.last%}</ul></li>{% endif %}
+                      {% endfor %}
+                    </ul>
+                  </p>
+                  <p><span class="textsection instructions">INSTRUCTIONS</span><br/>{{ recipe['directions'] }}</p>
+                </div>
+                <input class="button orange recipetogglebtn" type="button" value="SHOW ALL INGREDIENTS AND INSTRUCTIONS"/>
+            </div>
+          </div>
+        {% endfor %}
         </div>
-        <div class="fullrecipeimg">
-          <img src="static/img/recipes/{{ recipe['id'] }}.jpg"/>
-        </div>
-        <div class="recipedesc">
-          <p><span class="textsection">INGREDIENTS FROM YOUR CART</span> 
-            <ul>
-            {%for food in cart%}
-                {% if food['id'] in recipe['foodsused']%}<li>{{food['name']|title}}</li>{%endif%}
-            {%endfor%}
-            </ul>
-          </p>
-          <p><span class="textsection">YIELDS:</span> {{ recipe['servings'] }} servings</p>
-          <p><span class="textsection">ALL INGREDIENTS</span><br/>
-            <ul>
-              {% for ingredient in recipe['ingredients']%}
-                  {% if not ingredient['qty'] %}
-                      {% if notfirst %}
-                        </ul><li>{{ingredient['name']|replace('=','')}}<ul>
-                      {% else %}
-                        <li>{{ingredient['name']|replace('=','')}}<ul>
-                          {% set notfirst = True %}
-                      {% endif %}
-                  {% else %}
-                      <li>{{ingredient['qty']}} {{ingredient['unit']}} {{ingredient['name']}} {% if ingredient['prep']%}({{ ingredient['prep'] }}){% endif %}</li>
-                  {% endif %}
-                  {%if notfirst and loop.last%}</ul></li>{% endif %}
-              {% endfor %}
-            </ul>
-          </p>
-          <p><span class="textsection">INSTRUCTIONS</span><br/>{{ recipe['directions'] }}</p>
-          <p><span class="textsection">SERVING NUTRITION</span><ul>
-            {% for nutrient in recipe['nutrition']%}
-              <li><strong>{{nutrient|replace(';','')}}</strong>: {{recipe['nutrition'][nutrient]}}{% if recipe['nutrition'][nutrient] != 'trace' %}{% if nutrient in ['Sodium','Cholesterol'] %} mg{% elif nutrient in ['Dietary Fiber','Fat','Total Fat','Carbohydrate','Protein'] %} g{% elif nutrient == 'Percent Calories From Fat'%}%{% endif %}{% endif %}
-              </li>
-            {% endfor %}
-          </ul></p>
-        </div>
-      </div>
       {% endfor %}
-    </div>
       <div class="deliversection">YOUR COUPONS</div>
       <div class="delivercoupons">
       <div class="coupon">
@@ -107,7 +127,84 @@
         <a class="button orange" type="button" href="/">CREATE A NEW CART</a>
       </div>
       </div>
+      <audio id="tapsound">
+        <source src="{{ url_for('static', filename='audio/tap.wav') }}" type="audio/wav">
+      </audio>
       <script>$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};</script>
-      <script src="{{ url_for('static', filename='js/masonry.min.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/d3.v3.min.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/libraries.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+      <script>
+
+var margin = {top: 20, right: 40, bottom: 30, left: 50},
+    width = 1350 - margin.left - margin.right,
+    height = 300 - margin.top - margin.bottom;
+
+var parseDate = d3.time.format("%Y%m%d").parse;
+
+var x = d3.time.scale()
+    .range([0, width]);
+
+var y = d3.scale.linear()
+    .range([height, 0]);
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .tickFormat(d3.time.format("%B %e"))
+    .orient("bottom");
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left");
+
+var area = d3.svg.area()
+    .x(function(d) { return x(d.Date); })
+    .y0(height)
+    .y1(function(d) { return y(d.Weight); });
+
+var svg = d3.select("#weightgraph").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+d3.json("{{ url_for('static', filename='js/sample.json') }}", function(error, data) {
+  data.forEach(function(d) {
+    d.Date = parseDate(d.Date);
+    d.Weight = +d.Weight;
+  });
+
+  x.domain(d3.extent(data, function(d) { return d.Date; }));
+  y.domain([d3.min(data, function(d) { return d.Weight; }), d3.max(data, function(d) { return d.Weight; })]);
+
+  var defs = svg.append('svg:defs');
+ 
+defs.append('svg:linearGradient')
+  .attr('gradientUnits', 'userSpaceOnUse')
+  .attr('x1', 0).attr('y1', 100).attr('x2', 0).attr('y2', 0)
+  .attr('id', 'master').call(
+      function(gradient) {
+        gradient.append('svg:stop').attr('offset', '0%').attr('style', 'stop-color:#faa51a;stop-opacity:1');
+        gradient.append('svg:stop').attr('offset', '100%').attr('style', 'stop-color:#f47a20;stop-opacity:1');
+      });
+
+  svg.append("path")
+      .datum(data)
+      .style("stroke", "none")
+      .style("fill", "url(#master)")
+      .attr("d", area);
+
+  svg.append('svg:linearGradient');
+
+  svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis);
+
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+});
+</script>
   </body>
 </html>

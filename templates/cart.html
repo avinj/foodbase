@@ -2,11 +2,14 @@
 <html lang="en">
   <head>
   	<meta charset="utf-8">
-	<title>Aavya Health - Shopping NutriCart&trade;</title>
+	<title>Aavya Health - NutriCart&trade;</title>
 	<meta name="description" content="An adaptive shopping cart that presents foods and recipes based on your nutritional needs and tastes.">
 	<meta name="author" content="Aavya Health">
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 	<link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}"/>
+  <style>
+  #cartexplain {text-align:center;}
+  </style>
   </head>
   <body>
 	<div id="container">
@@ -15,12 +18,7 @@
         <img src="{{ url_for('static', filename='img/aavya_logo.png') }}">
         Aavya Health
       </div>
-      <div class="explain goal" style="background: none;
-position: absolute;
-top: -1px;
-left: 1250px;
-">Selected Goal:<br/><soan style="font-weight:bold">Lower Blood Pressure</span></div>
-      <div class="explain">Here's a shopping cart personalized for your nutritional needs. Check out and save recipies for inspiration. Tap the foods you're not interested to get select new foods and recipes. Tap "Print My Foods and Recipes" when you're done!</div>
+      <div class="explain" id="cartexplain">This shopping cart is personalized to help you lose 20 pounds in 60 days and eat healthily.<br/>Browse and save recipes for inspiration. Tap foods you don't want and we'll recommended new foods and recipes.</div>
       {% for food in cart %}
         <div class="fooditem" id="{{ food['id'] }}">
           <div class="image">
@@ -45,6 +43,7 @@ left: 1250px;
                 {% endif %}
                  FROM YOUR CART
               </div>
+              {{recipe}}
             </div>
             <div id="saverecipe">
               <input id="recipeleft" class="recipeleft button orange" type="button" value="&#9654;">
@@ -53,14 +52,14 @@ left: 1250px;
             </div>
             <div class="carousel">
                 {% for recipe in recipes%}
-                  <div title="{{recipe['name']}}" name="{{recipe['foodsused']}}" id="{{recipe['id']}}"><img src="{{ url_for('static', filename='img/recipes/'+recipe['img']) }}" width=410 height=230 border="0" /></div>
+                  <div title="{{recipe['name']}}" name="{{recipe['foodsused']}}" id="{{recipe['id']}}"><img src="{{ url_for('static', filename='img/recipes/'+recipe['img']) }}" width=534 height=300 border="0" /></div>
                 {% endfor %}
             </div>
           </div>
         {% endif %}    
       {% endfor %}
       <div class="buttons">
-        <a class="button orange" type="button" href="results">PRINT MY FOODS AND RECIPES</a>
+        <a class="button orange" type="button" href="results">PRINT MY SHOPPING LIST AND RECIPES</a>
       </div>
       </div>
       <audio id="tapsound">

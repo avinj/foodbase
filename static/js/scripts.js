@@ -2,7 +2,7 @@
 function genShow() {
  
 	var dur = 1000;
-	var pDur = 4000;
+	var pDur = 5000;
  
 	$('.carousel').carouFredSel({
 		items: {
@@ -107,7 +107,7 @@ function genShow() {
 genShow();
 
 //play sound
-$('input, .fooditem, a').click(function() {
+$('input, button, .dropentry, .fooditem, a').click(function() {
 	$("#tapsound")[0].load();
 	$("#tapsound")[0].play();
 });
@@ -122,7 +122,7 @@ $(function() {
 	});
 
 	//Handle cart and recipe replacements
-    $('.fooditem').on('click', function(e) {
+    $('.fooditem:not(.deliverablefood)').on('click', function(e) {
     	prevID = $(this).attr('id');
       	$.getJSON($SCRIPT_ROOT + '/_update_cart', {
       		itemToReplace: prevID
@@ -138,7 +138,7 @@ $(function() {
       			//recipes
       			$('.carousel').empty();
       			data.recipes.forEach(function(recipe){
-      				$('.carousel').append('<div title="'+recipe['name']+'" name="'+recipe['foodsused']+'" id="'+recipe['id']+'"><img src="static/img/recipes/'+recipe['img']+'" border="0" /></div>');
+      				$('.carousel').append('<div title="'+recipe['name']+'" name="'+recipe['foodsused']+'" id="'+recipe['id']+'"><img src="static/img/recipes/'+recipe['img']+'" border="0" width=534 height=300/></div>');
       			});
       			$('#reciperight').click();
       		});
@@ -147,6 +147,22 @@ $(function() {
     });
   });
 
+var wall1, wall2, wall3, wall4;
+function masonLoad() {
+  wall1 = new Masonry( document.getElementById('category1'), {});
+  wall2 = new Masonry( document.getElementById('category2'), {});
+  wall3 = new Masonry( document.getElementById('category3'), {});
+  wall4 = new Masonry( document.getElementById('category4'), {});
+};
+window.onload = masonLoad();
+
+
+
+//Toggle recipe view
+$('.recipetogglebtn').click(function(){
+	$(this).val($(this).val() == "SHOW ALL INGREDIENTS AND INSTRUCTIONS" ? "HIDE ALL INGREDIENTS AND INSTRUCTIONS" : "SHOW ALL INGREDIENTS AND INSTRUCTIONS");
+	$(this).prev().toggle(0,function(){masonLoad()});
+});
 /*automatically resize title text*/
 /*$(function() {
 	$( ".title" ).each(function(){
